@@ -18,12 +18,17 @@ public class Server {
         }
     }
 
-    public void listen() throws IOException {
+    public void listen()  {
         while(true) {
-            Socket socket = serverSocket.accept();
-            ClientThread thread = new ClientThread(socket, this);
-            clients.add(thread);
-            thread.start();
+            try {
+                Socket socket = serverSocket.accept();
+                ClientThread thread = new ClientThread(socket, this);
+                clients.add(thread);
+                thread.start();
+            }catch (IOException e){
+                throw new RuntimeException(e);
+            }
+
         }
     }
     public void Broadcast(String message, ClientThread sender){

@@ -26,6 +26,7 @@ public class ClientThread extends Thread {
                 server.Broadcast(message, this);
             }
             System.out.println("client disconnected");
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
