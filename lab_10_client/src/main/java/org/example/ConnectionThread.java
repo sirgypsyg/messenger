@@ -19,7 +19,6 @@ public class ConnectionThread extends Thread {
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
             writer = new PrintWriter(outputStream, true);
-
             String message;
             while ((message = reader.readLine()) != null){
                 System.out.println(message);
@@ -28,7 +27,9 @@ public class ConnectionThread extends Thread {
             throw new RuntimeException(e);
         }
     }
-
+    public void login(String clientName){
+        writer.println("login:" + clientName);
+    }
     public void sendMessage(String message){
         writer.println(message);
     }

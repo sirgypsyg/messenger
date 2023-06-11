@@ -40,4 +40,10 @@ public class Server {
         }
     }
 
+    public void online(ClientThread sender){
+        for (var client : clients){
+            sender.sendMessage(client.getName());
+        }
+    }
+
 }

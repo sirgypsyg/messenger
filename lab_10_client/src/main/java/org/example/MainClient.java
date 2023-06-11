@@ -12,6 +12,11 @@ public class MainClient {
             connectionThread.start();
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
+            System.out.println("Whats ur login?");
+            String clientName = reader.readLine();
+            System.out.println("Welcome " + clientName);
+            connectionThread.login(clientName);
+
             while (true){
                 String message = reader.readLine();
                 connectionThread.sendMessage(message);

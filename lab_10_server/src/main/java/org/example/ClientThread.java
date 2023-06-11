@@ -2,9 +2,16 @@ package org.example;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.List;
 
 public class ClientThread extends Thread {
     private Socket socket;
+
+    public String getLogin() {
+        return login;
+    }
+
+    private String login;
     private PrintWriter writer;
     private Server server;
     public ClientThread(Socket socket, Server server) {
@@ -20,12 +27,19 @@ public class ClientThread extends Thread {
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
             writer = new PrintWriter(output, true);
 
-            System.out.println("New client!");
             String message;
             while ((message = reader.readLine()) != null) {
-                server.Broadcast(message, this);
+                String[] words = message.split(":", 2);
+                switch (words[0]){
+                    case "login"-> {
+                        login = words[1];
+                        server.Broadcast(words[1] + " has joined the chat", this);
+                    }
+                    case "/online" -> server.online(this);
+                    default -> server.Broadcast(message, this);
+                }
             }
-            System.out.println("client disconnected");
+            server.Broadcast("user" + " has left the chat", this);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
