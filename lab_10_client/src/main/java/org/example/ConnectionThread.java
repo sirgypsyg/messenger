@@ -33,4 +33,10 @@ public class ConnectionThread extends Thread {
     public void sendMessage(String message){
         writer.println(message);
     }
+    public void whisper(String message){
+        writer.println("/w:" + message);
+    }
+    public void online(){
+        writer.println("/online:");
+    }
 }

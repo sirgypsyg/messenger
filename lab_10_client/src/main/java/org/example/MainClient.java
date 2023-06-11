@@ -19,9 +19,16 @@ public class MainClient {
 
             while (true){
                 String message = reader.readLine();
-                connectionThread.sendMessage(message);
+                if (message.startsWith("/")){
+                    String words[] = message.split(" ", 2);
+                    switch (words[0]){
+                        case "/w" -> connectionThread.whisper(words[1]);
+                        case "/online" ->connectionThread.online();
+                    }
+                }else connectionThread.sendMessage(message);
             }
         }catch (IOException e){
+            System.out.println("ex 1");
             throw new RuntimeException(e);
         }
 

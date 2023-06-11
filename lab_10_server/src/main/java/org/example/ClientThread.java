@@ -36,12 +36,13 @@ public class ClientThread extends Thread {
                         server.Broadcast(words[1] + " has joined the chat", this);
                     }
                     case "/online" -> server.online(this);
-                    default -> server.Broadcast(message, this);
+                    case "/w" -> server.whisper(words[1], this);
+                    default -> server.Broadcast(login + ": " + message, this);
                 }
             }
             server.Broadcast("user" + " has left the chat", this);
-
         } catch (IOException e) {
+            server.removeClient(this);
             throw new RuntimeException(e);
         }
     }

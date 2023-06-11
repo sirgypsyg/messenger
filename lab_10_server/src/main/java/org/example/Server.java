@@ -10,6 +10,9 @@ public class Server {
     private ServerSocket serverSocket;
     private List<ClientThread> clients = new ArrayList<>();
 
+    public void removeClient(ClientThread clientThread){
+        clients.remove(clientThread);
+    }
     public Server(int port) {
         try {
             this.serverSocket = new ServerSocket(port);
@@ -42,8 +45,18 @@ public class Server {
 
     public void online(ClientThread sender){
         for (var client : clients){
-            sender.sendMessage(client.getName());
+            sender.sendMessage(client.getLogin());
         }
     }
+    public void whisper(String message, ClientThread sender){
+        String[] temp = message.split(" ", 2);
 
+        for (var client : clients){
+            if (client.getLogin().equals(temp[0])){
+                client.sendMessage(temp[1]);
+                return;
+            }
+        }
+        sender.sendMessage("cant find user");
+    }
 }
