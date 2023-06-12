@@ -19,6 +19,10 @@ public class ClientThread extends Thread {
         this.server = server;
     }
 
+    public Socket getSocket() {
+        return socket;
+    }
+
     @Override
     public void run() {
         try {
@@ -37,6 +41,7 @@ public class ClientThread extends Thread {
                     }
                     case "/online" -> server.online(this);
                     case "/w" -> server.whisper(words[1], this);
+                    case "/file" -> server.sendFile(words[1], this);
                     default -> server.Broadcast(login + ": " + message, this);
                 }
             }

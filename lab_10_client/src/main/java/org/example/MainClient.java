@@ -23,7 +23,8 @@ public class MainClient {
                     String words[] = message.split(" ", 2);
                     switch (words[0]){
                         case "/w" -> connectionThread.whisper(words[1]);
-                        case "/online" ->connectionThread.online();
+                        case "/online" -> connectionThread.online();
+                        case "/file" -> connectionThread.sendFile(words[1]);
                     }
                 }else connectionThread.sendMessage(message);
             }
